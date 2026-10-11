@@ -1,0 +1,13 @@
+{
+  "Website": {
+    "shortName": "MaaS",
+    "longName": "Math as a Service",
+    "baseUrl": "maas.vercel.app"
+  },
+  "routes" : [
+    {"label": "Start", "href": "#"},
+    {"label": "1", "href": "#"},
+    {"label": "2", "href": "#"},
+    {"label": "3", "href": "#"}
+  ]
+}

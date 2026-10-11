@@ -1,5 +1,7 @@
 ---
 import "../styles/global.css";
+import data from "../locales/root.json";
+import AppNavbar from "../components/app-navbar";
 ---
 
 <!doctype html>
@@ -13,6 +15,7 @@ import "../styles/global.css";
         <title>Astro Basics</title>
     </head>
     <body>
+        <AppNavbar />
         <slot />
     </body>
 </html>
