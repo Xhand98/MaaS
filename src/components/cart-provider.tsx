@@ -1,12 +1,6 @@
 "use client";
 
-import {
-  createContext,
-  useContext,
-  useEffect,
-  useState,
-  type ReactNode,
-} from "react";
+import { createContext, useContext, useSyncExternalStore, type ReactNode } from "react";
 
 export type CartItem = {
   id: string;
@@ -22,44 +16,91 @@ type CartContextType = {
   clearCart: () => void;
 };
 
-const STORAGE_KEY = "maas-cart"
+const STORAGE_KEY = "maas-cart";
+const EMPTY: CartItem[] = [];
 
 const CartContext = createContext<CartContextType | null>(null);
 
+const listeners = new Set<() => void>();
+let cachedRaw: string | null = null;
+let cachedCart: CartItem[] = EMPTY;
+
+function subscribe(callback: () => void) {
+  listeners.add(callback);
+  window.addEventListener("storage", callback);
+  return () => {
+    listeners.delete(callback);
+    window.removeEventListener("storage", callback);
+  };
+}
+
+function isCartItemArray(value: unknown): value is CartItem[] {
+  return (
+    Array.isArray(value) &&
+    value.every(
+      (item) =>
+        typeof item.id === "string" &&
+        typeof item.description === "string" &&
+        typeof item.price === "number" &&
+        Number.isFinite(item.price),
+    )
+  );
+}
+
+function getSnapshot(): CartItem[] {
+  const raw = localStorage.getItem(STORAGE_KEY);
+
+  if (raw !== cachedRaw) {
+    cachedRaw = raw;
+
+    try {
+      const parsed: unknown = raw ? JSON.parse(raw) : [];
+      cachedCart = isCartItemArray(parsed) ? parsed : EMPTY;
+    } catch {
+      cachedCart = EMPTY;
+    }
+  }
+
+  return cachedCart;
+}
+
+function getServerSnapshot(): CartItem[] {
+  return EMPTY;
+}
+
+function writeCart(next: CartItem[]) {
+  const raw = JSON.stringify(next);
+
+  try {
+    localStorage.setItem(STORAGE_KEY, raw);
+  } catch (error) {
+    console.error("Failed to save cart:", error);
+    return;
+  }
+
+  cachedRaw = raw;
+  cachedCart = next;
+  listeners.forEach((listener) => listener());
+}
+
 export function CartProvider({ children }: { children: ReactNode }) {
-  const [cart, setCart] = useState<CartItem[]>([]);
-  const [isLoaded, setIsLoaded] = useState(false)
-
-  useEffect(() => {
-      try {
-        const savedCart = localStorage.getItem(STORAGE_KEY);
-
-        if (savedCart) {
-          setCart(JSON.parse(savedCart));
-        }
-      } catch {
-        console.error("Failed to load cart from localStorage");
-      } finally {
-        setIsLoaded(true);
-      }
-    }, []);
+  const cart = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
 
   const addToCart = (description: string, price: number) => {
-    setCart((items) => [
-      ...items,
-      {
-        id: crypto.randomUUID(),
-        description,
-        price,
-      },
+    if (!Number.isFinite(price) || price < 0) {
+      throw new Error("Cart item price must be a finite, non-negative number");
+    }
+
+    writeCart([
+      ...getSnapshot(),
+      { id: crypto.randomUUID(), description, price },
     ]);
   };
 
-  const removeFromCart = (id: string) => {
-    setCart((items) => items.filter((item) => item.id !== id));
-  };
+  const removeFromCart = (id: string) =>
+    writeCart(getSnapshot().filter((item) => item.id !== id));
 
-  const clearCart = () => setCart([]);
+  const clearCart = () => writeCart([]);
 
   const cartTotal = cart.reduce((total, item) => total + item.price, 0);
 
@@ -74,10 +115,6 @@ export function CartProvider({ children }: { children: ReactNode }) {
 
 export function useCart() {
   const context = useContext(CartContext);
-
-  if (!context) {
-    throw new Error("useCart must be used within a CartProvider");
-  }
-
+  if (!context) throw new Error("useCart must be used within a CartProvider");
   return context;
 }
