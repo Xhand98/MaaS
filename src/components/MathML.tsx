@@ -1,11 +1,14 @@
 "use client"
 
-type MathMLProps = React.ComponentProps<"div"> & {
-  mathml: string
-}
-export default function MathML({ mathml }: MathMLProps) {
-  return (<div className="math-result"
-    dangerouslySetInnerHTML={{__html: mathml}}>
+import { ComponentProps } from "react";
 
-</div>)
+type MathMLProps = Omit<ComponentProps<"div">, "ref" | "dangerouslySetInnerHTML"> & {
+  mathml: string;
+};
+
+export default function MathML({ mathml, className, ...props }: MathMLProps) {
+  return (<div {...props}
+               className={`math-result ${className ?? ""}`}
+               dangerouslySetInnerHTML={{__html: mathml}} />
+)
 }
