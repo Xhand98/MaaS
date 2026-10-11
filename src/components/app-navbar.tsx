@@ -35,8 +35,7 @@ export default function AppNavbar(props: NavbarProps) {
             href={root.routes[0].href}
           >
             <Avatar
-              isSquare
-              size="md"
+              size="lg"
               className="outline-hidden bg-white w-10 h-10 items-center pl-0.5 border-cyan-300 border-2"
               src={root.Website.icon}
             />
