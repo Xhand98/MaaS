@@ -1,6 +1,6 @@
 "use client"
 
-type MathMLProps = {
+type MathMLProps = React.ComponentProps<"div"> & {
   mathml: string
 }
 export default function MathML({ mathml }: MathMLProps) {
