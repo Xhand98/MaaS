@@ -14,6 +14,7 @@ import {
 } from "lucide-react";
 import NumberFlow from "@number-flow/react";
 import { useCart } from "@/components/cart-provider";
+import { CircleCheck } from "lucide-react";
 
 export default function CartPage() {
   const { cart, cartTotal, removeFromCart, clearCart } = useCart();
@@ -224,7 +225,7 @@ export default function CartPage() {
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.96, y: 12 }}
               onClick={(event) => event.stopPropagation()}
-              className="relative w-full max-w-md rounded-2xl border border-zinc-200 bg-white p-6 shadow-2xl dark:border-zinc-800 dark:bg-zinc-950"
+              className="relative w-full max-w-md rounded-2xl border border-zinc-200  p-6 shadow-2xl dark:border-zinc-800 dark:bg-zinc-950"
             >
               <button
                 aria-label="Close checkout"
@@ -234,15 +235,15 @@ export default function CartPage() {
                 <X size={17} />
               </button>
 
-              <div className="mb-4 flex size-12 items-center justify-center rounded-xl bg-zinc-100 dark:bg-zinc-900">
-                <CreditCard size={22} />
+              <div className="mb-4 flex size-12 items-center justify-center rounded-xl  dark:bg-zinc-900">
+                <CircleCheck className="size-5" />
               </div>
 
               <h2 id="checkout-title" className="text-xl font-semibold">
-                You've been checkout-ed.
+                {"You've been checkout-ed."}
               </h2>
 
-              <p className="mt-2 text-sm leading-6 text-zinc-500">
+              <p className="mt-2 text-sm leading-6 ">
                 The checkout department is currently busy inventing new fees.
                 Your ${cartTotal.toFixed(2)} charge is not a real payment.
               </p>

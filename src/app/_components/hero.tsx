@@ -10,7 +10,7 @@ const COLORS = {
 
 const IMAGES = {
   phoneClouds: {
-    path: "https://registry.monet.design/_next/image?url=%2Fregistry%2Fpopcorn-manifesto-hero%2Fphone-clouds.png&w=750&q=75",
+    path: "/hero.png",
     alt: "Smartphone floating in clouds",
   },
 } as const;
