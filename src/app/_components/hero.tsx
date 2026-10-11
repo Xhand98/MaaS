@@ -12,13 +12,6 @@ const IMAGES = {
   phoneClouds: {
     path: "https://registry.monet.design/_next/image?url=%2Fregistry%2Fpopcorn-manifesto-hero%2Fphone-clouds.png&w=750&q=75",
     alt: "Smartphone floating in clouds",
-    prompt: `Smartphone floating in ethereal clouds.
-Style: Dreamlike, conceptual product photography
-Layout: Phone centered, surrounded by soft clouds
-Composition: Surreal, floating aesthetic
-Color palette: Soft pastels, dreamy atmosphere
-Mood: Innovative, aspirational, cloud-based
-Technical: High quality, artistic composition`,
   },
 } as const;
 
