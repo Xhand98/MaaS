@@ -13,6 +13,7 @@ import { Button, Input, Modal, Surface } from "@heroui/react";
 import React from "react";
 import { CircleCheck } from "lucide-react";
 import MathML from "@/components/MathML";
+import { useCart } from "@/components/cart-provider";
 
 // const numberButtons = [
 //   ["7", "8", "9"],
@@ -75,6 +76,8 @@ export default function Calculator() {
   const [result, setResult] = React.useState("");
   const [loading, setLoading] = React.useState(false);
 
+  const {addToCart} = useCart()
+
   async function handleCal() {
     setLoading(true);
     setError("");
@@ -101,6 +104,7 @@ export default function Calculator() {
         .join("\n");
 
       setResult(answer ?? "No answer found");
+      addToCart(`Math operation: ${expression}`, 10);
     } catch (err) {
       setError(err instanceof Error ? err.message : "Something went wrong.");
     } finally {
@@ -130,11 +134,11 @@ export default function Calculator() {
   }
 
   return (
-    <div>
+    <div className="p-6">
       <Surface className="flex min-w-[320px] min-h-60 border-l-0 rounded-xl border-b-0 flex-col gap-3  p-6" variant="default">
            <Input disabled value={expression} placeholder="Try 2+2" variant="secondary" className={"min-h-36 text-2xl"} />
       </Surface>
-      <div className="grid grid-cols-[1fr_1.2fr_0.7fr_0.8fr] gap-1.5 bg-neutral-900 p-1.5">
+      <div className="grid grid-cols-[1fr_1.2fr_0.7fr_0.8fr] gap-1.5 bg-neutral-900 p-6">
       {/* Algebra */}
       <div className="grid grid-cols-3 gap-1 mr-5">
         {algebraButtons.flat().map((item, index) => (
@@ -197,7 +201,6 @@ export default function Calculator() {
                 <Modal.Heading>{loading ? "Loading..." : "Operation done!"}</Modal.Heading>
             </Modal.Header>
             <Modal.Body>
-              <p>
                 {loading ? (
                   "Loading..."
                 ) : (
@@ -206,7 +209,6 @@ export default function Calculator() {
               <p className="font-bold italic text-"> Operation added to cart! </p>
                   </div>
                 )}
-              </p>
             </Modal.Body>
             <Modal.Footer>
               <Button slot="close" variant="secondary">

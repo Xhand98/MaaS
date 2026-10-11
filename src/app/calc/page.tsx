@@ -50,8 +50,8 @@ export default function CalcPage() {
   }
 
   return (
-    <div className="relative h-[94dvh] w-full bg-slate-500 dark flex items-center middle">
-      <main className="pt-40">
+    <div className=" bg-slate-500 dark flex min-h-screen items-center justify-center">
+      <main>
         <Calculator />
       </main>
     </div>

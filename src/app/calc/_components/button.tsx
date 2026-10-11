@@ -1,5 +1,8 @@
 import { InlineMath } from "react-katex"
 import { Button } from "@heroui/react"
+import CalculatorButton from "./calculator"
+import { Modal } from "@heroui/react"
+
 type CalcButtonProps = {
   item: CalculatorButton,
   onPress: (value: string) => void
