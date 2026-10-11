@@ -3,7 +3,7 @@
     "shortName": "MaaS",
     "longName": "Math as a Service",
     "baseUrl": "maa-s-alpha.vercel.app",
-    "icon": "/favicon.webp"
+    "icon": "/logo.svg"
   },
   "routes" : [
     {"label": "Home", "href": "/"},
