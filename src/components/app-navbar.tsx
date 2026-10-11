@@ -5,7 +5,6 @@ import { MagnifyingGlassIcon, ShoppingBagIcon } from "@heroicons/react/24/outlin
 import { Avatar } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
 import { Link } from "@/components/ui/link"
-import { Menu, MenuContent, MenuItem } from "@/components/ui/menu"
 import {
   Navbar,
   NavbarGap,
@@ -20,6 +19,12 @@ import {
   NavbarTrigger,
 } from "@/components/ui/navbar"
 import { Separator } from "@/components/ui/separator"
+import root from "@/locales/root.json"
+
+type Route = {
+  label: string,
+  href: string
+};
 
 export default function AppNavbar(props: NavbarProps) {
   return (
@@ -27,27 +32,27 @@ export default function AppNavbar(props: NavbarProps) {
       <Navbar {...props}>
         <NavbarStart>
           <Link
-            className="flex items-center gap-x-2 font-medium"
-            aria-label="Icon of MaaS"
+            className="flex items-center gap-x-2 font-medium text-2xl"
+            aria-label={"Icon of " + root.Website.shortName}
           >
             <Avatar
               isSquare
               size="sm"
               className="outline-hidden"
-              src="/favicon.webp"
+              src={root.Website.icon}
             />
             <span>
-              MaaS
+              {root.Website.shortName}
             </span>
           </Link>
         </NavbarStart>
         <NavbarGap />
         <NavbarSection>
-          <NavbarItem href="#" isCurrent>
-            Home
-          </NavbarItem>
-          <NavbarItem href="#">Pricing</NavbarItem>
-          <NavbarItem href="#">About Us</NavbarItem>
+          {root.routes.map((e: Route) => {
+            return (
+              <NavbarItem href={e.href}>{e.label}</NavbarItem>
+            )
+          })}
         </NavbarSection>
         <NavbarSpacer />
         <NavbarSection className="max-md:hidden">

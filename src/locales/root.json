@@ -2,12 +2,13 @@
   "Website": {
     "shortName": "MaaS",
     "longName": "Math as a Service",
-    "baseUrl": "maas.vercel.app"
+    "baseUrl": "maas.vercel.app",
+    "icon": "/favicon.webp"
   },
   "routes" : [
-    {"label": "Start", "href": "#"},
-    {"label": "1", "href": "#"},
-    {"label": "2", "href": "#"},
+    {"label": "Home", "href": "/"},
+    {"label": "Pricing", "href": "/pricing"},
+    {"label": "About Us", "href": "/about"},
     {"label": "3", "href": "#"}
   ]
 }
