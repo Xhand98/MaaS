@@ -19,14 +19,18 @@ import {
 } from "@/components/ui/navbar"
 import root from "@/locales/root.json"
 import { Separator } from "@/components/ui/separator"
+import { Badge } from "@heroui/react"
+import { useCart } from "./cart-provider"
+import { ShoppingBag } from "lucide-react"
 
 type Routes = {
   label: string,
   href: string
 }
 export default function AppNavbar(props: NavbarProps) {
+  const { cart, cartTotal } = useCart()
   return (
-    <NavbarProvider>
+    <NavbarProvider className="bg-stone-900">
       <Navbar {...props}>
         <NavbarStart>
           <Link
@@ -57,9 +61,18 @@ export default function AppNavbar(props: NavbarProps) {
           <Button intent="plain" size="sq-sm" aria-label="Search for products">
             <MagnifyingGlassIcon />
           </Button>
-          <Button intent="plain" size="sq-sm" aria-label="Your Bag">
-            <ShoppingBagIcon />
+              <Link href="/cart" >
+          <Button intent="plain" size="sq-sm" aria-label="Your Bag" className={"cursor-pointer"}>
+
+            <Badge.Anchor>
+
+              <ShoppingBag/>
+              <Badge color="accent" size="sm">
+                ${cartTotal.toFixed(2)}
+              </Badge>
+            </Badge.Anchor>
           </Button>
+              </Link>
           <Separator orientation="vertical" className="mr-3 ml-1 h-5" />
 
         </NavbarSection>

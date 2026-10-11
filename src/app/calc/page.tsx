@@ -2,8 +2,10 @@
 
 import "katex/dist/katex.min.css";
 import MathML from "@/components/MathML";
-import { Button } from "@/components/ui/button";
+// import { Button } from "@/components/ui/button";
+import { Input, Surface, Button } from "@heroui/react";
 import React from "react";
+import Calculator from "./_components/calculator";
 
 export default function CalcPage() {
   const [calc, setCalc] = React.useState("");
@@ -46,27 +48,12 @@ export default function CalcPage() {
       setLoading(false);
     }
   }
-
   return (
-      <div className="relative h-[94dvh] w-full bg-white">
-    <main className="pt-40">
-        <div className="absolute bottom-0 left-0 right-0 top-0 bg-[linear-gradient(to_right,#4f4f4f2e_1px,transparent_1px),linear-gradient(to_bottom,#4f4f4f2e_1px,transparent_1px)] bg-size[14px_24px] mask-[radial-gradient(ellipse_80%_50%_at_50%_0%,#000_70%,transparent_110%)]">
-          <input
-            value={calc}
-            onChange={(e) => setCalc(e.target.value)}
-            placeholder="Try 2+2"
-          />
 
-          <Button onClick={handleCal} isDisabled={loading || calc === ""}>
-            {loading ? "Calculating..." : "Calculate"}
-          </Button>
-
-          <h1>Calc</h1>
-          {result && <MathML mathml={result} />}
-          {error && <p role="alert">{error}</p>}
-      </div>
-
-    </main>
-        </div>
+    <div className="absolute inset-0 -z-10 h-full w-full bg-white bg-[linear-gradient(to_right,#f0f0f0_1px,transparent_1px),linear-gradient(to_bottom,#f0f0f0_1px,transparent_1px)] bg-[size:6rem_4rem] dark flex min-h-screen items-center justify-center">
+      <main>
+        <Calculator />
+      </main>
+    </div>
   );
-};
+}

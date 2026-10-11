@@ -1,5 +1,6 @@
+
 @import "tailwindcss";
-@import "@heroui/styles"
+@import "@heroui/styles";
 
 :root {
   --background: #ffffff;
@@ -15,6 +16,7 @@
   --font-cm-sans: "Computer Modern Sans", sans-serif;
   --font-cm-mono: "Computer Modern Typewriter", monospace;
 }
+
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
