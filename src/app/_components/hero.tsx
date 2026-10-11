@@ -37,24 +37,6 @@ interface HeroProps {
   heroImageAlt?: string;
 }
 
-// Popcorn Logo Icon
-function PopcornLogo({ className = "" }: { className?: string }) {
-  return (
-    <svg
-      viewBox="0 0 24 24"
-      fill="none"
-      className={className}
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <rect x="4" y="4" width="6" height="6" rx="1" fill="#1a1a1a" />
-      <rect x="14" y="4" width="6" height="6" rx="1" fill="#1a1a1a" />
-      <rect x="4" y="14" width="6" height="6" rx="1" fill="#1a1a1a" />
-      <rect x="14" y="14" width="6" height="6" rx="1" fill="#1a1a1a" />
-    </svg>
-  );
-}
-
-
 // Main Component
 export default function Hero({
   mode = "light",
@@ -124,7 +106,7 @@ export default function Hero({
             transition={{ duration: 0.7, delay: 0.4 }}
             className="relative mt-8 w-full max-w-2xl"
           >
-            <div className="relative aspect-[4/3] w-full">
+            <div className="relative aspect-4/3 w-full">
               <Image
                 src={IMAGES.phoneClouds.path}
                 alt={IMAGES.phoneClouds.alt}
