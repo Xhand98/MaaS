@@ -1,3 +1,5 @@
+"use client"
+
 // const algebraButtons = [
 //   [String.raw`a^2`, String.raw`a^b`, "|a|"],
 //   [String.raw`\sqrt{}`, String.raw`\sqrt[n]{x}`, String.raw`\pi`],
@@ -7,8 +9,10 @@
 
 import { useState } from "react";
 import CalcButton from "./button";
-import { Button, Input, Surface } from "@heroui/react";
+import { Button, Input, Modal, Surface } from "@heroui/react";
 import React from "react";
+import { CircleCheck } from "lucide-react";
+import MathML from "@/components/MathML";
 
 // const numberButtons = [
 //   ["7", "8", "9"],
@@ -66,6 +70,7 @@ const operations: CalculatorButton[] = [
 
 export default function Calculator() {
   const [expression, setExpression] = useState("")
+  const [isOpen, setIsOpen] = useState(false)
   const [error, setError] = React.useState("");
   const [result, setResult] = React.useState("");
   const [loading, setLoading] = React.useState(false);
@@ -75,7 +80,7 @@ export default function Calculator() {
     setError("");
     setResult("");
     try {
-      const response = await fetch("api/calculate", {
+      const response = await fetch("/api/calculate", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ input: expression }),
@@ -111,6 +116,7 @@ export default function Calculator() {
 
       case "ENTER":
         void handleCal();
+        setIsOpen(true)
         break;
 
       case "LEFT":
@@ -180,6 +186,37 @@ export default function Calculator() {
         ))}
         </div>
       </div>
+      <Modal.Backdrop isOpen={isOpen} onOpenChange={setIsOpen} className="dark">
+                <Modal.Container>
+                  <Modal.Dialog className="sm:max-w-[360px]">
+                    <Modal.CloseTrigger />
+                    <Modal.Header>
+                      <Modal.Icon className="bg-accent-soft text-accent-soft-foreground">
+                        <CircleCheck className="size-5" />
+                      </Modal.Icon>
+              <Modal.Heading>{loading ? "Loading..." : "Operation done!"}</Modal.Heading>
+                    </Modal.Header>
+                    <Modal.Body>
+                      <p>
+                        {loading ? (
+                          "Loading..."
+                        ) : (
+                          <>
+                            Your result is: <MathML mathml={result} />
+                          </>
+                        )}
+                      </p>
+                    </Modal.Body>
+                    <Modal.Footer>
+                      <Button slot="close" variant="secondary">
+                        Cancel
+                      </Button>
+                      <Button slot="close">Confirm</Button>
+                    </Modal.Footer>
+                  </Modal.Dialog>
+                </Modal.Container>
+              </Modal.Backdrop>
+
     </div>
   )
 }
