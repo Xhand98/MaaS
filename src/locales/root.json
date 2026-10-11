@@ -1,0 +1,22 @@
+{
+  "Website": {
+    "shortName": "MaaS",
+    "longName": "Math as a Service",
+    "baseUrl": "maas.vercel.app",
+    "icon": "/favicon.webp"
+  },
+  "routes" : [
+    {"label": "Home", "href": "/"},
+    {"label": "Pricing", "href": "/pricing"},
+    {"label": "About Us", "href": "/about"},
+    {"label": "3", "href": "#"}
+  ],
+  "hero": {
+    "mode": "light",
+    "tagText": "For the money* not the students!",
+    "headingLine1": "Mathematics",
+    "headingLine2": "Your ",
+    "headingLine2_5": "way",
+    "descriptionLine1": "Our mission is to provide exceptional global",
+    "descriptionLine2": "connectivity, to enhance humanity's potential."}
+}
