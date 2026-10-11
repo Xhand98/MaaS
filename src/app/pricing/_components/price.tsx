@@ -15,11 +15,14 @@ const COLORS = {
 
 import { motion } from "motion/react";
 import { Check } from "lucide-react";
+import React from "react";
+import { useCart } from "@/components/cart-provider";
 
 interface PricingPlan {
   title: string;
   description: string;
   price: string;
+  value: number;
   originalPrice?: string;
   saveAmount?: string;
   features: string[];
@@ -44,6 +47,7 @@ const defaultPlans: PricingPlan[] = [
     title: "Basic Arithmetic",
     description: "Your numbers deserve the premium treatment.",
     price: "$30",
+    value:30,
     features: [
       "Addition of happiness",
       "Subtraction of worries",
@@ -58,6 +62,7 @@ const defaultPlans: PricingPlan[] = [
     description:
       "Unlock the mathematical potential your free trial has been hiding from you.",
     price: "$100",
+    value: 100,
     originalPrice: "$250",
     saveAmount: "Save $150",
     features: [
@@ -76,6 +81,7 @@ const defaultPlans: PricingPlan[] = [
     description:
       "Experience mathematics without artificial limitations. Terms and conditions apply.",
     price: "$495",
+    value: 495,
     originalPrice: "$5495",
     saveAmount: "Save $5000",
     features: [
@@ -101,6 +107,14 @@ export default function PricePage({
 }: PricingOplScreenshot35Props) {
   const colors = COLORS[mode];
   const isDark = mode === "dark";
+  const [plan, setPlan] = React.useState(0)
+  const [price, setPrice] = React.useState(0)
+
+  const {addToCart} = useCart()
+
+  function buy() {
+    addToCart(`Plan: ${defaultPlans[plan-1].title}`, price);
+  }
 
   return (
     <section
@@ -199,6 +213,9 @@ export default function PricePage({
                 {/* CTA Button */}
                 <button
                   className={`mb-3 w-full rounded-full py-3 text-sm font-medium transition-all duration-300 hover:scale-[1.02] ${isDark ? "bg-white text-gray-900 hover:bg-gray-100" : "bg-gray-900 text-white hover:bg-gray-800"}`}
+                  onClick={() => {
+                    setPlan(index + 1); setPrice(plan.value); buy()
+                  }}
                 >
                   {plan.isPopular ? "Unlock your full Potential" : "Get started"}
                 </button>

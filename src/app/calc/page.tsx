@@ -38,9 +38,6 @@ export default function CalcPage() {
         .filter(Boolean)
         .join("\n");
 
-      console.log("Wolfram response:", data);
-      console.log("Pods:", data.pods);
-
       setResult(answer ?? "No answer found");
     } catch (err) {
       setError(err instanceof Error ? err.message : "Something went wrong.");
