@@ -140,7 +140,7 @@ export default function PricePage({
             >
               {/* Gradient overlay */}
               <div
-                className={`pointer-events-none absolute inset-0 rounded-2xl bg-gradient-to-tr ${plan.gradient}`}
+                className={`pointer-events-none absolute inset-0 rounded-2xl bg-linear-to-tr ${plan.gradient}`}
               />
 
               {/* Popular Badge */}
@@ -213,7 +213,7 @@ export default function PricePage({
                     {plan.features.map((feature, featureIndex) => (
                       <li key={featureIndex} className="flex items-center gap-2">
                         <Check
-                          className={`h-4 w-4 flex-shrink-0 ${isDark ? "text-gray-400" : "text-gray-600"}`}
+                          className={`h-4 w-4 shrink-0 ${isDark ? "text-gray-400" : "text-gray-600"}`}
                         />
                         <span
                           className={`text-sm ${isDark ? "text-gray-400" : "text-gray-600"}`}
@@ -261,7 +261,7 @@ export default function PricePage({
             </p>
           </div>
           <div
-            className="relative flex-shrink-0 overflow-hidden rounded-xl p-6"
+            className="relative shrink-0 overflow-hidden rounded-xl p-6"
             style={{
               background: isDark
                 ? "linear-gradient(135deg, rgba(139, 92, 246, 0.3) 0%, rgba(244, 114, 182, 0.3) 100%)"
