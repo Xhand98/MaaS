@@ -9,7 +9,7 @@
     {"label": "Home", "href": "/"},
     {"label": "Pricing", "href": "/pricing"},
     {"label": "Calculate!", "href": "/calc"},
-    {"label": "3", "href": "#"}
+    {"label": "Cart", "href": "/cart"}
   ],
   "hero": {
     "mode": "light",
