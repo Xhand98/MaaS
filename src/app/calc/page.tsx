@@ -1,5 +1,6 @@
 "use client";
 
+import "katex/dist/katex.min.css";
 import Calculator from "./_components/calculator";
 
 export default function CalcPage() {
