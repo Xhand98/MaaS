@@ -1,4 +1,4 @@
-export type PlanId = "basic-arithmetic" | "pre-algebra" | "algebra-1"
+export type PlanId = "free" | "basic-arithmetic" | "pre-algebra" | "algebra-1"
 
 export type UserProfile = {
   id: string;
