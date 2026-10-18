@@ -21,7 +21,7 @@ import root from "@/locales/root.json"
 import { Separator } from "@/components/ui/separator"
 import { Badge } from "@heroui/react"
 import { useCart } from "./cart-provider"
-import { ShoppingBag } from "lucide-react"
+import { ShoppingBag, User } from "lucide-react"
 
 type Routes = {
   label: string,
@@ -57,12 +57,15 @@ export default function AppNavbar(props: NavbarProps) {
           })}
         </NavbarSection>
         <NavbarSpacer />
-        <NavbarSection className="max-md:hidden">
-          <Button intent="plain" size="sq-sm" aria-label="Search for products">
-            <MagnifyingGlassIcon />
-          </Button>
-              <Link href="/cart" >
-          <Button intent="plain" size="sq-sm" aria-label="Your Bag" className={"cursor-pointer"}>
+        <NavbarSection className=" max-md:hidden">
+          <Link href="/login">
+
+            <Button intent="plain" size="sm" aria-label="Enter your account"className={"cursor-pointer"} >
+              <User />
+            </Button>
+          </Link>
+          <Link href="/cart">
+            <Button intent="plain" size="sm" aria-label="Your Bag" className={"cursor-pointer"}>
 
             <Badge.Anchor>
 
@@ -80,12 +83,18 @@ export default function AppNavbar(props: NavbarProps) {
       <NavbarMobile>
         <NavbarTrigger />
         <NavbarSpacer />
-        <Button intent="plain" size="sq-sm" aria-label="Search for products">
-          <MagnifyingGlassIcon />
+        <Link href="/login">
+
+        <Button intent="plain" size="sm" aria-label="Enter your account">
+          <User />
         </Button>
-        <Button intent="plain" size="sq-sm" aria-label="Your Bag">
+        </Link>
+        <Link href="/cart">
+
+        <Button intent="plain" size="sm" aria-label="Your Bag">
           <ShoppingBagIcon />
         </Button>
+        </Link>
         <NavbarSeparator className="mr-2.5" />
       </NavbarMobile>
     </NavbarProvider>
