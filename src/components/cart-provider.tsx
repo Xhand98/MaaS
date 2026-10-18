@@ -1,17 +1,19 @@
 "use client";
 
+import { PlanId, VALID_PLANS } from "@/lib/user";
 import { createContext, useContext, useSyncExternalStore, type ReactNode } from "react";
 
 export type CartItem = {
   id: string;
   description: string;
   price: number;
+  planId?: PlanId;
 };
 
 type CartContextType = {
   cart: CartItem[];
   cartTotal: number;
-  addToCart: (description: string, price: number) => void;
+  addToCart: (description: string, price: number, planId?: PlanId) => void;
   removeFromCart: (id: string) => void;
   clearCart: () => void;
 };
@@ -86,14 +88,20 @@ function writeCart(next: CartItem[]) {
 export function CartProvider({ children }: { children: ReactNode }) {
   const cart = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
 
-  const addToCart = (description: string, price: number) => {
+  const addToCart = (description: string, price: number, planId?: PlanId) => {
     if (!Number.isFinite(price) || price < 0) {
       throw new Error("Cart item price must be a finite, non-negative number");
     }
 
+    if (planId && !VALID_PLANS.includes(planId)) {
+      throw new Error("Plan iD does not exist.")
+    }
+
     writeCart([
       ...getSnapshot(),
-      { id: crypto.randomUUID(), description, price },
+      {
+        id: crypto.randomUUID(), description, price,
+        ...(planId ? {planId}: {})},
     ]);
   };
 

@@ -120,21 +120,23 @@ export default function PricePage({
   const [message, setMessage] = React.useState("");
 
   function buy(plan: PricingPlan) {
-    const user = getUser();
+    // const user = getUser();
 
-    if (!user) {
-      router.push("/login")
-      return
-    }
+    // if (!user) {
+    //   router.push("/login")
+    //   return
+    // }
 
-    const updatedUser = updateUserPlan(plan.id)
+    // const updatedUser = updateUserPlan(plan.id)
 
-    if (!updatedUser) {
-      setMessage("Could not update plan, try again later.")
-      return;
-    }
-    setMessage(`Your plan is now ${plan.title}`)
+    // if (!updatedUser) {
+    //   setMessage("Could not update plan, try again later.")
+    //   return;
+    // }
+    // setMessage(`Your plan is now ${plan.title}`)
 
+    addToCart(plan.title, Number(plan.value), plan.id);
+    router.push("/cart")
   }
 
   return (

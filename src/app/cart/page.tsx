@@ -15,12 +15,45 @@ import {
 import NumberFlow from "@number-flow/react";
 import { useCart } from "@/components/cart-provider";
 import { CircleCheck } from "lucide-react";
+import { getUser, updateUserPlan } from "@/lib/user";
+import { useRouter } from "next/navigation";
+import { Button } from "@heroui/react";
 
 export default function CartPage() {
   const { cart, cartTotal, removeFromCart, clearCart } = useCart();
+  const [issued, setIssued] = useState(0);
   const [showCheckout, setShowCheckout] = useState(false);
+  const [checkoutError, setCheckoutError] = useState("");
 
+  const router = useRouter()
+
+  function handleCheckout() {
+
+  const user = getUser();
+  if (!user) {
+    router.push("/login")
+    return;
+  }
+    const planItem = cart.find((item) => item.planId);
+
+    if (!planItem?.planId) {
+      setCheckoutError("No plan found on the cart, add one!")
+      return
+    }
+    const updatedUser = updateUserPlan(planItem.planId)
+
+    if (!updatedUser) {
+      setCheckoutError("Could not update plan, try again.")
+      return
+    }
+
+    setIssued(cartTotal)
+    clearCart();
+    setCheckoutError("");
+    setShowCheckout(true);
+  }
   return (
+
     <main className="mx-auto min-h-screen w-full max-w-6xl px-5 py-12 sm:px-8">
       <Link
         href="/"
@@ -45,13 +78,13 @@ export default function CartPage() {
         </div>
 
         {cart.length > 0 && (
-          <button
+          <Button
             onClick={clearCart}
             className="hidden items-center gap-2 text-sm text-zinc-500 transition hover:text-red-500 sm:flex"
           >
             <Trash2 size={15} />
             Clear cart
-          </button>
+          </Button>
         )}
       </header>
 
@@ -102,7 +135,6 @@ export default function CartPage() {
                     <div className="flex size-12 shrink-0 items-center justify-center rounded-xl bg-zinc-100 dark:bg-zinc-900">
                       <CreditCard className="size-5 text-zinc-500" />
                     </div>
-
                     <div className="min-w-0 flex-1">
                       <p className="break-words text-sm font-medium">
                         {item.description}
@@ -117,13 +149,13 @@ export default function CartPage() {
                         ${item.price.toFixed(2)}
                       </span>
 
-                      <button
+                      <Button
                         aria-label={`Remove ${item.description}`}
                         onClick={() => removeFromCart(item.id)}
                         className="rounded-lg p-2 text-zinc-400 transition hover:bg-red-500/10 hover:text-red-500"
                       >
                         <X size={16} />
-                      </button>
+                      </Button>
                     </div>
                   </motion.article>
                 ))}
@@ -131,13 +163,13 @@ export default function CartPage() {
             </div>
 
             <div className="mt-4 flex justify-between sm:hidden">
-              <button
+              <Button
                 onClick={clearCart}
                 className="inline-flex items-center gap-2 text-sm text-zinc-500 hover:text-red-500"
               >
                 <Trash2 size={15} />
                 Clear cart
-              </button>
+              </Button>
             </div>
 
             <Link
@@ -190,14 +222,14 @@ export default function CartPage() {
               </div>
             </div>
 
-            <button
-              onClick={() => setShowCheckout(true)}
+            <Button
+              onClick={handleCheckout}
               className="mt-6 flex w-full items-center justify-center gap-2 rounded-xl bg-foreground px-4 py-3.5 text-sm font-medium text-background transition hover:opacity-80"
             >
               <CreditCard size={17} />
               Proceed to checkout
               <ArrowRight size={16} />
-            </button>
+            </Button>
 
             <p className="mt-4 text-center text-xs leading-5 text-zinc-500">
               Secure checkout experience™
@@ -211,7 +243,7 @@ export default function CartPage() {
       <AnimatePresence>
         {showCheckout && (
           <motion.div
-            className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4 backdrop-blur-sm"
+            className="fixed inset-0 z-50 flex items-center justify-center bg-stone-900 p-4 backdrop-blur-sm"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -227,13 +259,14 @@ export default function CartPage() {
               onClick={(event) => event.stopPropagation()}
               className="relative w-full max-w-md rounded-2xl border border-zinc-200  p-6 shadow-2xl dark:border-zinc-800 dark:bg-zinc-950"
             >
-              <button
+              <Button
+                variant="outline"
                 aria-label="Close checkout"
                 onClick={() => setShowCheckout(false)}
                 className="absolute right-4 top-4 rounded-lg p-2 text-zinc-500 hover:bg-zinc-100 dark:hover:bg-zinc-900"
               >
                 <X size={17} />
-              </button>
+              </Button>
 
               <div className="mb-4 flex size-12 items-center justify-center rounded-xl  dark:bg-zinc-900">
                 <CircleCheck className="size-5" />
@@ -244,16 +277,16 @@ export default function CartPage() {
               </h2>
 
               <p className="mt-2 text-sm leading-6 ">
-                The checkout department is currently busy inventing new fees.
-                Your ${cartTotal.toFixed(2)} charge is not a real payment.
+                Your payment has been processed sucessfully
+                Your ${issued} charge is not a real payment.
               </p>
 
-              <button
+              <Button
                 onClick={() => setShowCheckout(false)}
                 className="mt-6 w-full rounded-xl bg-foreground px-4 py-3 text-sm font-medium text-background hover:opacity-80"
               >
                 Understandable
-              </button>
+              </Button>
             </motion.div>
           </motion.div>
         )}
