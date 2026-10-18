@@ -26,14 +26,16 @@ export default function CartPage() {
   const [checkoutError, setCheckoutError] = useState("");
 
   const router = useRouter()
-
-  function handleCheckout() {
-
   const user = getUser();
+
   if (!user) {
     router.push("/login")
     return;
   }
+
+  function handleCheckout() {
+
+
     const planItem = cart.find((item) => item.planId);
 
     if (!planItem?.planId) {
