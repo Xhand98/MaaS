@@ -1,7 +1,6 @@
-import { InlineMath } from "react-katex"
-import { Button } from "@heroui/react"
-import CalculatorButton from "./calculator"
-import { Modal } from "@heroui/react"
+import { InlineMath } from "react-katex";
+import { Button } from "@heroui/react";
+import type { ComponentProps } from "react";
 
 export type CalculatorButton = {
   label: string;
@@ -10,17 +9,23 @@ export type CalculatorButton = {
 };
 
 type CalcButtonProps = {
-  item: CalculatorButton,
-  onClick: (value: string) => void
-}
+  item: CalculatorButton;
+  onClick: (value: string) => void;
+} & Omit<ComponentProps<typeof Button>, "onClick" | "children">;
 
-export default function CalcButton({item, onClick}: CalcButtonProps) {
-  return (<>
+export default function CalcButton({
+  item,
+  onClick,
+  className,
+  ...buttonProps
+}: CalcButtonProps) {
+  return (
     <Button
       type="button"
       variant="outline"
+      {...buttonProps}
       onClick={() => onClick(item.value)}
-      className="h-9 w-full rounded-sm"
+      className={`h-9 w-full rounded-sm ${className ?? ""}`}
     >
       {item.latex ? (
         <InlineMath math={item.label} />
@@ -28,5 +33,5 @@ export default function CalcButton({item, onClick}: CalcButtonProps) {
         item.label
       )}
     </Button>
-  </>)
+  );
 }

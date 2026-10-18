@@ -26,34 +26,39 @@ export default function CartPage() {
   const [checkoutError, setCheckoutError] = useState("");
 
   const router = useRouter()
-  const user = getUser();
 
-  if (!user) {
+  const user = getUser();
+  if(!user) {
     router.push("/login")
-    return;
   }
 
-  function handleCheckout() {
 
+
+  function handleCheckout() {
+    setCheckoutError("");
+
+    if (cart.length === 0) {
+      setCheckoutError("Your cart is empty.");
+      return;
+    }
 
     const planItem = cart.find((item) => item.planId);
 
-    if (!planItem?.planId) {
-      setCheckoutError("No plan found on the cart, add one!")
-      return
-    }
-    const updatedUser = updateUserPlan(planItem.planId)
+    // Only update the subscription if a plan is in the cart.
+    if (planItem?.planId) {
+      const updatedUser = updateUserPlan(planItem.planId);
 
-    if (!updatedUser) {
-      setCheckoutError("Could not update plan, try again.")
-      return
+      if (!updatedUser) {
+        setCheckoutError("Could not update your plan. Please try again.");
+        return;
+      }
     }
 
-    setIssued(cartTotal)
+    setIssued(cartTotal);
     clearCart();
-    setCheckoutError("");
     setShowCheckout(true);
   }
+
   return (
 
     <main className="mx-auto min-h-screen w-full max-w-6xl px-5 py-12 sm:px-8">
