@@ -9,7 +9,7 @@ export type UserProfile = {
 
 export const STORAGE_KEY = 'maas-user'
 
-const VALID_PLANS: PlanId[] = [
+export const VALID_PLANS: PlanId[] = [
   "free",
   "basic-arithmetic",
   "pre-algebra",
