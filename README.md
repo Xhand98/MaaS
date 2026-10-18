@@ -106,9 +106,9 @@ Distributed under the Unlicense License. See `LICENSE` for more information.
 <!-- CONTACT -->
 ## Contact
 
-Your Name - [@Xhand98](https://x.com/xhand98) - hendrickherrera9@gmail.com
+[@Xhand98](https://x.com/xhand98) - hendrickherrera9@gmail.com
 
-Project Link: [https://github.com/Xhand98/MaaS](https://github.com/Xhand98/MaaS)
+[https://github.com/Xhand98/MaaS](https://github.com/Xhand98/MaaS)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
