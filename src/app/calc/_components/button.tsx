@@ -11,15 +11,15 @@ export type CalculatorButton = {
 
 type CalcButtonProps = {
   item: CalculatorButton,
-  onPress: (value: string) => void
+  onClick: (value: string) => void
 }
 
-export default function CalcButton({item, onPress}: CalcButtonProps) {
+export default function CalcButton({item, onClick}: CalcButtonProps) {
   return (<>
     <Button
       type="button"
       variant="outline"
-      onClick={() => onPress(item.value)}
+      onClick={() => onClick(item.value)}
       className="h-9 w-full rounded-sm"
     >
       {item.latex ? (

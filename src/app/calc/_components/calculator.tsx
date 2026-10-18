@@ -145,7 +145,7 @@ export default function Calculator() {
           <CalcButton
             key={`algebra-${index}`}
             item={item}
-            onPress={insertValue}
+            onClick={insertValue}
           />
         ))}
       </div>
@@ -156,7 +156,7 @@ export default function Calculator() {
           <CalcButton
             key={`number-${index}`}
             item={item}
-            onPress={insertValue}
+            onClick={insertValue}
           />
         ))}
       </div>
@@ -167,7 +167,7 @@ export default function Calculator() {
           <CalcButton
             key={item.label}
             item={item}
-            onPress={insertValue}
+            onClick={insertValue}
           />
         ))}
       </div>
@@ -185,7 +185,7 @@ export default function Calculator() {
           <CalcButton
             key={item.label}
             item={item}
-            onPress={insertValue}
+            onClick={insertValue}
           />
         ))}
         </div>
