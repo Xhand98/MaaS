@@ -78,7 +78,7 @@ export function LoginForm({
           id: crypto.randomUUID(),
           name: normalizedEmail.split("@")[0],
           email: normalizedEmail,
-          planId: "basic-arithmetic"
+          planId: "free"
         };
         localStorage.setItem(STORAGE_KEY, JSON.stringify(user))
       }
