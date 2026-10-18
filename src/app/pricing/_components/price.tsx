@@ -17,8 +17,10 @@ import { motion } from "motion/react";
 import { Check } from "lucide-react";
 import React from "react";
 import { useCart } from "@/components/cart-provider";
-
-interface PricingPlan {
+import { useRouter } from "next/navigation";
+import { getUser, updateUserPlan } from "@/lib/user";
+export type PricingPlan = {
+  id: "basic-arithmetic" | "pre-algebra" | "algebra-1";
   title: string;
   description: string;
   price: string;
@@ -31,7 +33,7 @@ interface PricingPlan {
   gradient: string;
 }
 
-interface PricingOplScreenshot35Props {
+interface PriceOptionsProps {
   mode?: "light" | "dark";
   title?: string;
   subtitle?: string;
@@ -44,6 +46,7 @@ interface PricingOplScreenshot35Props {
 
 const defaultPlans: PricingPlan[] = [
   {
+    id: "basic-arithmetic",
     title: "Basic Arithmetic",
     description: "Your numbers deserve the premium treatment.",
     price: "$30",
@@ -58,6 +61,7 @@ const defaultPlans: PricingPlan[] = [
     gradient: "from-emerald-100/60 via-transparent to-transparent",
   },
   {
+    id: 'pre-algebra',
     title: "Pre-Algebra",
     description:
       "Unlock the mathematical potential your free trial has been hiding from you.",
@@ -77,6 +81,7 @@ const defaultPlans: PricingPlan[] = [
     gradient: "from-violet-100/60 via-transparent to-transparent",
   },
   {
+    id: "algebra-1",
     title: "Algebra I",
     description:
       "Experience mathematics without artificial limitations. Terms and conditions apply.",
@@ -104,16 +109,32 @@ export default function PricePage({
   additionalServiceDescription = "Every calculation beign done cost us more that i'd cost you, so we're making u pay 😎",
   additionalServicePrice = "$10",
   additionalServiceUnit = "Per calculation",
-}: PricingOplScreenshot35Props) {
+}: PriceOptionsProps) {
+  const router = useRouter();
+  const { addToCart } = useCart();
   const colors = COLORS[mode];
   const isDark = mode === "dark";
   const [plan, setPlan] = React.useState(0)
   const [price, setPrice] = React.useState(0)
 
-  const {addToCart} = useCart()
+  const [message, setMessage] = React.useState("");
 
-  function buy() {
-    addToCart(`Plan: ${defaultPlans[plan-1].title}`, price);
+  function buy(plan: PricingPlan) {
+    const user = getUser();
+
+    if (!user) {
+      router.push("/login")
+      return
+    }
+
+    const updatedUser = updateUserPlan(plan.id)
+
+    if (!updatedUser) {
+      setMessage("Could not update plan, try again later.")
+      return;
+    }
+    setMessage(`Your plan is now ${plan.title}`)
+
   }
 
   return (
@@ -213,9 +234,7 @@ export default function PricePage({
                 {/* CTA Button */}
                 <button
                   className={`mb-3 w-full rounded-full py-3 text-sm font-medium transition-all duration-300 hover:scale-[1.02] ${isDark ? "bg-white text-gray-900 hover:bg-gray-100" : "bg-gray-900 text-white hover:bg-gray-800"}`}
-                  onClick={() => {
-                    setPlan(index + 1); setPrice(plan.value); buy()
-                  }}
+                  onClick={() => buy(plan)}
                 >
                   {plan.isPopular ? "Unlock your full Potential" : "Get started"}
                 </button>

@@ -9,6 +9,13 @@ export type UserProfile = {
 
 export const STORAGE_KEY = 'maas-user'
 
+const VALID_PLANS: PlanId[] = [
+  "free",
+  "basic-arithmetic",
+  "pre-algebra",
+  "algebra-1"
+];
+
 export function getUser(): UserProfile | null {
   if (typeof window === "undefined") return null;
   try {
@@ -27,7 +34,7 @@ export function getUser(): UserProfile | null {
       typeof user.id !== "string" ||
       typeof user.name !== "string" ||
       typeof user.email !== "string" ||
-      !["basic-arithmetic", "pre-algebra", "algebra-1"].includes(String(user.planId))
+      !VALID_PLANS.includes(user.planId as PlanId)
     ) {
       return null;
     }

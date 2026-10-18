@@ -1,9 +1,9 @@
-import PricingOplScreenshot35 from "./_components/price";
+import PriceOptions from "./_components/price";
 
 export default function PricePage() {
   return (
     <div>
-      <PricingOplScreenshot35 />
+      <PriceOptions />
     </div>
   )
 }
