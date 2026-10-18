@@ -60,7 +60,7 @@ export function LoginForm({
             typeof parsed.id !== "string" ||
             typeof parsed.name !== "string" ||
             typeof parsed.email !== "string" ||
-            !["basic-arithmetic", "pre-algebra", "algebra-1"].includes(String(user.planId))
+            !["free", "basic-arithmetic", "pre-algebra", "algebra-1"].includes(String(user?.planId || "free"))
           ) {
             user = parsed as UserProfile
           }
