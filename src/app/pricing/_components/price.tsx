@@ -18,7 +18,6 @@ import { Check } from "lucide-react";
 import React from "react";
 import { useCart } from "@/components/cart-provider";
 import { useRouter } from "next/navigation";
-import { getUser, updateUserPlan } from "@/lib/user";
 export type PricingPlan = {
   id: "basic-arithmetic" | "pre-algebra" | "algebra-1";
   title: string;
@@ -110,34 +109,8 @@ export default function PricePage({
   additionalServicePrice = "$10",
   additionalServiceUnit = "Per calculation",
 }: PriceOptionsProps) {
-  const router = useRouter();
-  const { addToCart } = useCart();
   const colors = COLORS[mode];
   const isDark = mode === "dark";
-  const [plan, setPlan] = React.useState(0)
-  const [price, setPrice] = React.useState(0)
-
-  const [message, setMessage] = React.useState("");
-
-  function buy(plan: PricingPlan) {
-    // const user = getUser();
-
-    // if (!user) {
-    //   router.push("/login")
-    //   return
-    // }
-
-    // const updatedUser = updateUserPlan(plan.id)
-
-    // if (!updatedUser) {
-    //   setMessage("Could not update plan, try again later.")
-    //   return;
-    // }
-    // setMessage(`Your plan is now ${plan.title}`)
-
-    addToCart(plan.title, Number(plan.value), plan.id);
-    router.push("/cart")
-  }
 
   return (
     <section

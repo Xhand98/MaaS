@@ -81,13 +81,19 @@ This is how to get the project running on your end.
 
 
 <!-- TODO -->
-<!--## Roadmap
+## Roadmap
 
-- [ ]
-- [ ] 
-- [ ] 
-- [ ] 
-- [ ] 
+- [x] Create user accounts.
+- [x] Create cart.
+- [x] Add plans to cart.
+- [x] Block buttons depending on the plan you have
+- [ ] Add graphing with desmos
+- [ ] Improve calculator UI
+- [ ] Add color theme slider (light mode/dark mode) 
+- [ ] Add db
+- [ ] Add user profiles
+- [ ] Add keyboard capabilities
+- [ ] Move text to locales
 
 See the [open issues](https://github.com/othneildrew/Best-README-Template/issues) for a full list of proposed features (and known issues).
 
