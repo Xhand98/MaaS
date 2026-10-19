@@ -111,7 +111,13 @@ export default function PricePage({
 }: PriceOptionsProps) {
   const colors = COLORS[mode];
   const isDark = mode === "dark";
+  const router = useRouter()
+  const { addToCart } = useCart()
+  function buy(plan: PricingPlan) {
 
+      addToCart(plan.title, Number(plan.value), plan.id);
+      router.push("/cart")
+    }
   return (
     <section
       className={`relative w-full py-16 md:py-24 ${isDark ? "bg-gray-950" : "bg-white"}`}
