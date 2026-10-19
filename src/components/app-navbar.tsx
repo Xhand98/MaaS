@@ -30,7 +30,7 @@ type Routes = {
 export default function AppNavbar(props: NavbarProps) {
   const { cartTotal } = useCart()
   return (
-    <NavbarProvider className="bg-stone-900">
+    <NavbarProvider className="bg-mist-950">
       <Navbar {...props}>
         <NavbarStart>
           <Link
