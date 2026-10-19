@@ -51,7 +51,7 @@ const DialogHeader = ({ className, ...props }: DialogHeaderProps) => {
     <div
       data-slot="dialog-header"
       className={cn(
-        "relative space-y-1 p-(--gutter) pb-[calc(var(--gutter)---spacing(3))]",
+        "relative space-y-1 p-(--gutter) pb-[calc(var(--gutter)-(--spacing(3)))]",
         className
       )}
     >
@@ -112,7 +112,7 @@ const DialogFooter = ({ className, ...props }: DialogFooterProps) => {
     <div
       data-slot="dialog-footer"
       className={cn(
-        "isolate mt-auto flex flex-col-reverse justify-end gap-3 p-(--gutter) pt-[calc(var(--gutter)---spacing(2))] group-not-has-data-[slot=dialog-body]/dialog:pt-0 group-not-has-data-[slot=dialog-body]/popover:pt-0 sm:flex-row",
+        "isolate mt-auto flex flex-col-reverse justify-end gap-3 p-(--gutter) pt-[calc(var(--gutter)-(--spacing(2)))] group-not-has-data-[slot=dialog-body]/dialog:pt-0 group-not-has-data-[slot=dialog-body]/popover:pt-0 sm:flex-row",
         className
       )}
       {...props}
@@ -134,7 +134,7 @@ const DialogCloseIcon = ({ className, ...props }: CloseButtonIndicatorProps) => 
     <PrimitiveButton
       slot="close"
       className={cx(
-        "close absolute end-1 top-1 z-50 grid size-8 place-content-center rounded-xl hover:bg-secondary focus:bg-secondary focus:outline-hidden focus-visible:ring-1 focus-visible:ring-primary sm:end-2 sm:top-2 sm:size-7 sm:rounded-md",
+        "close absolute inset-e-1 top-1 z-50 grid size-8 place-content-center rounded-xl hover:bg-secondary focus:bg-secondary focus:outline-hidden focus-visible:ring-1 focus-visible:ring-primary sm:inset-e-2 sm:top-2 sm:size-7 sm:rounded-md",
         className
       )}
     >

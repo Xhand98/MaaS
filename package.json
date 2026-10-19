@@ -19,6 +19,7 @@
     "@mui/material": "^9.5.0",
     "@number-flow/react": "^0.6.2",
     "@react-aria/i18n": "^3.13.1",
+    "@vercel/analytics": "^2.0.1",
     "class-variance-authority": "^0.7.1",
     "cn": "^0.4.0",
     "framer-motion": "^14.1.0",

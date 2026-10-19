@@ -16,7 +16,7 @@ import {
 } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
 import Link from "next/link"
-import { PlanId, UserProfile, STORAGE_KEY } from "@/lib/user"
+import {  UserProfile, STORAGE_KEY } from "@/lib/user"
 import { useRouter } from "next/navigation"
 import { useState } from "react"
 
