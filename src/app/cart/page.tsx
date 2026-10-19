@@ -2,7 +2,7 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import {
   ArrowLeft,
@@ -18,20 +18,37 @@ import { CircleCheck } from "lucide-react";
 import { getUser, updateUserPlan } from "@/lib/user";
 import { useRouter } from "next/navigation";
 import { Button } from "@heroui/react";
+import { UserProfile } from "@/lib/user";
 
 export default function CartPage() {
   const { cart, cartTotal, removeFromCart, clearCart } = useCart();
   const [issued, setIssued] = useState(0);
+  const [user, setUser] = useState<UserProfile | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
   const [showCheckout, setShowCheckout] = useState(false);
   const [checkoutError, setCheckoutError] = useState("");
 
   const router = useRouter()
 
-  const user = getUser();
-  if(!user) {
-    router.push("/login")
-  }
+  useEffect(() => {
+    const timer = requestAnimationFrame(() => {
+      const currentUser = getUser();
 
+      if (!currentUser) {
+        router.replace("/login");
+        return;
+      }
+
+      setUser(currentUser);
+      setIsLoading(false);
+    });
+
+    return () => cancelAnimationFrame(timer);
+  }, [router]);
+
+  if (isLoading || !user) {
+    return null;
+  }
 
 
   function handleCheckout() {
@@ -129,7 +146,7 @@ export default function CartPage() {
 
             <div className="overflow-hidden rounded-2xl border border-zinc-200 dark:border-zinc-800">
               <AnimatePresence initial={false}>
-                {cart.map((item, index) => (
+                {cart.map((item) => (
                   <motion.article
                     key={item.id}
                     layout
@@ -143,7 +160,7 @@ export default function CartPage() {
                       <CreditCard className="size-5 text-zinc-500" />
                     </div>
                     <div className="min-w-0 flex-1">
-                      <p className="break-words text-sm font-medium">
+                      <p className="wrap-break-words text-sm font-medium">
                         {item.description}
                       </p>
                       <p className="mt-1 text-xs text-zinc-500">
@@ -186,6 +203,7 @@ export default function CartPage() {
               <ArrowLeft size={15} />
               Continue calculating
             </Link>
+            return {checkoutError ?(<span><p>An error has ocurred: {checkoutError}</p></span>) : ""}
           </section>
 
           <motion.aside

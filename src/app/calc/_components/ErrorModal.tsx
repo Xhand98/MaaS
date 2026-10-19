@@ -1,7 +1,5 @@
-import MathML from "@/components/MathML";
 import { Button, Modal } from "@heroui/react";
 import { X } from "lucide-react";
-import { useState } from "react";
 
 type ErrorModalProps = {
   enable: boolean;
@@ -20,7 +18,7 @@ export default function ErrorModal({enable, mistake, onClose}: ErrorModalProps) 
   return (
     <Modal.Backdrop isOpen={enable} onOpenChange={handleOpenChange} className="dark">
       <Modal.Container>
-        <Modal.Dialog className="sm:max-w-[360px]">
+        <Modal.Dialog className="sm:max-w-90">
           <Modal.CloseTrigger />
           <Modal.Header>
             <Modal.Icon className="bg-red-400 text-accent-soft-foreground">

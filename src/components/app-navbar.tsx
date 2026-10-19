@@ -28,7 +28,7 @@ type Routes = {
   href: string
 }
 export default function AppNavbar(props: NavbarProps) {
-  const { cart, cartTotal } = useCart()
+  const { cartTotal } = useCart()
   return (
     <NavbarProvider className="bg-stone-900">
       <Navbar {...props}>
@@ -60,12 +60,12 @@ export default function AppNavbar(props: NavbarProps) {
         <NavbarSection className=" max-md:hidden">
           <Link href="/login">
 
-            <Button intent="plain" size="sm" aria-label="Enter your account"className={"cursor-pointer"} >
+            <Button variant="default" size="sm" aria-label="Enter your account"className={"cursor-pointer"} >
               <User />
             </Button>
           </Link>
           <Link href="/cart">
-            <Button intent="plain" size="sm" aria-label="Your Bag" className={"cursor-pointer"}>
+            <Button variant="default" size="sm" aria-label="Your Bag" className={"cursor-pointer"}>
 
             <Badge.Anchor>
 
@@ -85,13 +85,13 @@ export default function AppNavbar(props: NavbarProps) {
         <NavbarSpacer />
         <Link href="/login">
 
-        <Button intent="plain" size="sm" aria-label="Enter your account">
+        <Button variant="default" size="sm" aria-label="Enter your account">
           <User />
         </Button>
         </Link>
         <Link href="/cart">
 
-        <Button intent="plain" size="sm" aria-label="Your Bag">
+        <Button variant="default" size="sm" aria-label="Your Bag">
           <ShoppingBagIcon />
         </Button>
         </Link>

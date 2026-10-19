@@ -1,6 +1,5 @@
 import { Button, Modal } from "@heroui/react";
 import { CircleCheck } from "lucide-react";
-import { useState } from "react";
 import MathML from "@/components/MathML";
 
 type CalcModalProps = {
@@ -18,7 +17,7 @@ export default function CalcModal({enable, result, onClose}: CalcModalProps) {
   return (
     <Modal.Backdrop isOpen={enable} onOpenChange={handleOpenChange} className="dark">
       <Modal.Container>
-        <Modal.Dialog className="sm:max-w-[360px]">
+        <Modal.Dialog className="sm:max-w-90">
           <Modal.CloseTrigger />
           <Modal.Header>
             <Modal.Icon className="bg-accent-soft text-accent-soft-foreground">

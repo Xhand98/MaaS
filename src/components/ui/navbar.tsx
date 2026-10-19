@@ -8,9 +8,11 @@ import { Heading } from "react-aria-components/Heading"
 import { Link, type LinkProps } from "@/components/ui/link"
 import { useIsMobile } from "@/hooks/use-mobile"
 import { cx } from "@/lib/primitive"
-import { Button, type ButtonProps } from "./button"
+import { Button } from "./button"
 import { Separator } from "./separator"
 import { Sheet, SheetBody, SheetContent } from "./sheet"
+
+type ButtonProps = React.ComponentProps<typeof Button>
 
 interface NavbarContextProps {
   open: boolean
@@ -91,7 +93,7 @@ const NavbarProvider = ({
   )
 }
 
-type Intent = "default" | "float" | "inset"
+type variant = "default" | "float" | "inset"
 type Placement = "top" | "bottom"
 type Side = "left" | "right"
 
@@ -99,14 +101,14 @@ interface StickyWithPlacement extends React.ComponentProps<"div"> {
   isSticky: true
   placement?: Placement
   side?: Side
-  intent?: Intent
+  variant?: variant
 }
 
 interface NonStickyWithoutPlacement extends React.ComponentProps<"div"> {
   isSticky?: false
   placement?: never
   side?: Side
-  intent?: Intent
+  variant?: variant
 }
 
 type NavbarProps = StickyWithPlacement | NonStickyWithoutPlacement
@@ -115,7 +117,7 @@ const Navbar = ({
   children,
   isSticky,
   placement = "top",
-  intent = "default",
+  variant = "default",
   side = "left",
   className,
   ref,
@@ -128,7 +130,7 @@ const Navbar = ({
         <span
           className="sr-only"
           aria-hidden
-          data-navbar={intent}
+          data-navbar={variant}
           data-navbar-sticky={isSticky}
           data-placement={placement ?? undefined}
         />
@@ -148,26 +150,26 @@ const Navbar = ({
 
   return (
     <div
-      data-navbar={intent}
+      data-navbar={variant}
       ref={ref}
       data-placement={placement ?? undefined}
       data-navbar-sticky={isSticky}
       className={cn([
-        "group/navbar-intent relative isolate",
+        "group/navbar-variant relative isolate",
         isSticky && "sticky top-0 z-40",
-        placement === "top" && intent === "float" && "md:pt-8",
-        placement === "bottom" && intent === "float" && "bottom-0 md:pb-8",
-        intent === "float" && "mx-auto w-full max-w-7xl px-4 xl:max-w-(--breakpoint-xl)",
+        placement === "top" && variant === "float" && "md:pt-8",
+        placement === "bottom" && variant === "float" && "bottom-0 md:pb-8",
+        variant === "float" && "mx-auto w-full max-w-7xl px-4 xl:max-w-(--breakpoint-xl)",
       ])}
       {...props}
     >
       <div
         className={cn(
           "relative isolate hidden py-(--navbar-gutter) [--navbar-gutter:--spacing(2.5)] md:block",
-          intent === "float" &&
+          variant === "float" &&
             "rounded-xl bg-bg py-0 *:data-[navbar=content]:max-w-7xl *:data-[navbar=content]:rounded-xl *:data-[navbar=content]:border *:data-[navbar=content]:bg-navbar *:data-[navbar=content]:px-4 *:data-[navbar=content]:py-(--navbar-gutter) *:data-[navbar=content]:shadow-xs",
-          ["default", "inset"].includes(intent) && "px-4",
-          intent === "default" && "border-b bg-navbar",
+          ["default", "inset"].includes(variant) && "px-4",
+          variant === "default" && "border-b bg-navbar",
           className
         )}
       >
@@ -215,7 +217,7 @@ const NavbarItem = ({ className, isCurrent, ...props }: NavbarItemProps) => {
           "group/sidebar-item pressed:bg-secondary pressed:text-secondary-fg hover:bg-secondary hover:text-secondary-fg",
           "aria-[current=page]:text-fg aria-[current=page]*:[svg]:text-fg",
           "col-span-full grid grid-cols-[auto_1fr_1.5rem_0.5rem_auto] supports-[grid-template-columns:subgrid]:grid-cols-subgrid md:supports-[grid-template-columns:subgrid]:grid-cols-none",
-          "relative min-w-0 items-center gap-x-3 rounded-lg p-2 text-start font-medium text-base/6 md:gap-x-(--navbar-gutter) md:px-(--navbar-gutter) md:py-[calc(var(--navbar-gutter)---spacing(0.5))] md:text-sm/5",
+          "relative min-w-0 items-center gap-x-3 rounded-lg p-2 text-start font-medium text-base/6 md:gap-x-(--navbar-gutter) md:px-(--navbar-gutter) md:py-[calc(var(--navbar-gutter)-(--spacing(0.5)))] md:text-sm/5",
           "*:[svg]:size-5 *:[svg]:shrink-0 *:[svg]:text-muted-fg md:*:[svg]:size-4",
           "*:data-[slot=loader]:size-5 *:data-[slot=loader]:shrink-0 md:*:data-[slot=loader]:size-4",
           "*:not-nth-2:last:[svg]:row-start-1 *:not-nth-2:last:[svg]:ms-auto *:not-nth-2:last:[svg]:size-5 md:*:not-nth-2:last:[svg]:size-4",
@@ -239,7 +241,7 @@ const NavbarItem = ({ className, isCurrent, ...props }: NavbarItemProps) => {
               transition={{ type: "spring", stiffness: 500, damping: 40 }}
               className={twJoin(
                 "absolute rounded-full bg-fg [--gutter:--spacing(0.5)]",
-                "inset-y-[calc(var(--navbar-gutter)---spacing(0.5))] -start-4 w-(--gutter) md:inset-y-auto md:w-auto",
+                "inset-y-[calc(var(--navbar-gutter)-(--spacing(0.5)))] -inset-s-4 w-(--gutter) md:inset-y-auto md:w-auto",
                 "md:inset-x-2 md:-bottom-[calc(var(--navbar-gutter)+1px)] md:h-(--gutter)"
               )}
             />
@@ -310,10 +312,10 @@ const NavbarTrigger = ({ className, onClick, ref, ...props }: NavbarTriggerProps
     <Button
       ref={ref}
       data-slot="navbar-trigger"
-      intent="plain"
+      variant="ghost"
       aria-label={props["aria-label"] || "Toggle Navbar"}
-      size="sq-sm"
-      className={cx("-ms-2 lg:hidden", className)}
+      size="sm"
+      className={cn("-ms-2 lg:hidden", className)}
       onClick={(event) => {
         onClick?.(event)
         toggleNavbar()

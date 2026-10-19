@@ -7,7 +7,10 @@ import { Heading, type HeadingProps } from "react-aria-components/Heading"
 import type { TextProps } from "react-aria-components/Text"
 import { cn } from "cn"
 import { cx } from "@/lib/primitive"
-import { Button, type ButtonProps } from "./button"
+import { Button, buttonVariants } from "./button"
+import type { VariantProps } from "class-variance-authority"
+
+type ButtonProps = React.ComponentProps<typeof Button>
 
 const Dialog = ({
   role = "dialog",
@@ -27,8 +30,15 @@ const Dialog = ({
   )
 }
 
-const DialogTrigger = ({ className, ...props }: ButtonProps) => (
-  <PrimitiveButton className={cx("cursor-pointer", className)} {...props} />
+const DialogTrigger = ({
+  className,
+  ...props
+}: React.ComponentProps<typeof PrimitiveButton> &
+  VariantProps<typeof buttonVariants>) => (
+  <PrimitiveButton
+    className={cx("cursor-pointer", className)}
+    {...props}
+  />
 )
 
 interface DialogHeaderProps extends Omit<React.ComponentProps<"div">, "title"> {
@@ -110,8 +120,8 @@ const DialogFooter = ({ className, ...props }: DialogFooterProps) => {
   )
 }
 
-const DialogClose = ({ intent = "plain", ref, ...props }: ButtonProps) => {
-  return <Button slot="close" ref={ref} intent={intent} {...props} />
+const DialogClose = ({ variant = "default", ref, ...props }: ButtonProps) => {
+  return <Button slot="close" ref={ref} variant={variant} {...props} />
 }
 
 interface CloseButtonIndicatorProps extends Omit<ButtonProps, "children"> {

@@ -3,14 +3,32 @@
 import "katex/dist/katex.min.css";
 import Calculator from "./_components/calculator";
 import { useRouter } from "next/navigation";
-import { getUser } from "@/lib/user";
+import { getUser, UserProfile } from "@/lib/user";
+import { useEffect, useState } from "react";
 
 export default function CalcPage() {
+  const [user, setUser] = useState<UserProfile | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
   const router = useRouter()
 
-  const user = getUser()
-  if (!user) {
-    router.push("/login")
+  useEffect(() => {
+    const timer = requestAnimationFrame(() => {
+      const currentUser = getUser();
+
+      if (!currentUser) {
+        router.replace("/login");
+        return;
+      }
+
+      setUser(currentUser);
+      setIsLoading(false);
+    });
+
+    return () => cancelAnimationFrame(timer);
+  }, [router]);
+
+  if (isLoading || !user) {
+    return null;
   }
   return (
 
